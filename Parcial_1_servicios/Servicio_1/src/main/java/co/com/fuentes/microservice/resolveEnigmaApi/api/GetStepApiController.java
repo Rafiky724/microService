@@ -1,5 +1,6 @@
 package co.com.fuentes.microservice.resolveEnigmaApi.api;
 
+import co.com.fuentes.microservice.resolveEnigmaApi.model.GetEnigmaStepResponse;
 import co.com.fuentes.microservice.resolveEnigmaApi.model.JsonApiBodyRequest;
 import co.com.fuentes.microservice.resolveEnigmaApi.model.JsonApiBodyResponseErrors;
 import co.com.fuentes.microservice.resolveEnigmaApi.model.JsonApiBodyResponseSuccess;
@@ -21,6 +22,7 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-03-09T15:03:44.847-05:00[America/Bogota]")
@@ -32,6 +34,14 @@ public class GetStepApiController implements GetStepApi {
     private final ObjectMapper objectMapper;
 
     private final HttpServletRequest request;
+    
+    /* inicio */
+    
+    private JsonApiBodyResponseSuccess response = new JsonApiBodyResponseSuccess();
+    private List<GetEnigmaStepResponse> enigmas = new ArrayList<>();
+    private GetEnigmaStepResponse enigma = new GetEnigmaStepResponse();
+    
+    /* final */
 
     @org.springframework.beans.factory.annotation.Autowired
     public GetStepApiController(ObjectMapper objectMapper, HttpServletRequest request) {
@@ -41,7 +51,20 @@ public class GetStepApiController implements GetStepApi {
 
     public ResponseEntity<List<JsonApiBodyResponseSuccess>> getStep(@ApiParam(value = "request body get enigma step" ,required=true )  @Valid @RequestBody JsonApiBodyRequest body) {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<List<JsonApiBodyResponseSuccess>>(HttpStatus.NOT_IMPLEMENTED);
+        
+        /* inicio */
+        
+        enigma.setAnswer("Abrir el refrigerador");
+        enigmas.add(enigma);
+        response.setData(enigmas);
+     
+        List<JsonApiBodyResponseSuccess> responseList = new ArrayList<>();
+        responseList.add(response);
+        
+        /* final */
+                
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
+        
     }
 
 }
