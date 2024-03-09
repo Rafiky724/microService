@@ -1,0 +1,8 @@
+{  
+   "basePackage":"co.com.fuentes.microservice.resolveEnigmaApi",
+   "configPackage":"co.com.fuentes.microservice.resolveEnigmaApi.config",
+   "apiPackage":"co.com.fuentes.microservice.resolveEnigmaApi.api",
+   "modelPackage":"co.com.fuentes.microservice.resolveEnigmaApi.model",
+   "groupId":"co.com.fuentes.service.resolveEnigmaApi",
+   "artifactId":"resolve-enigma-api2"
+}
