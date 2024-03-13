@@ -34,14 +34,6 @@ public class GetStepApiController implements GetStepApi {
     private final ObjectMapper objectMapper;
 
     private final HttpServletRequest request;
-    
-    /* inicio */
-    
-    private JsonApiBodyResponseSuccess response = new JsonApiBodyResponseSuccess();
-    private List<GetEnigmaStepResponse> enigmas = new ArrayList<>();
-    private GetEnigmaStepResponse enigma = new GetEnigmaStepResponse();
-    
-    /* final */
 
     @org.springframework.beans.factory.annotation.Autowired
     public GetStepApiController(ObjectMapper objectMapper, HttpServletRequest request) {
@@ -49,22 +41,9 @@ public class GetStepApiController implements GetStepApi {
         this.request = request;
     }
 
-    public ResponseEntity<List<JsonApiBodyResponseSuccess>> getStep(@ApiParam(value = "request body get enigma step" ,required=true )  @Valid @RequestBody JsonApiBodyRequest body) {
-        String accept = request.getHeader("Accept");
-       
-        /* inicio */
-        
-        enigma.setAnswer("Poner la jirafa adentro");
-        enigmas.add(enigma);
-        response.setData(enigmas);
-     
-        List<JsonApiBodyResponseSuccess> responseList = new ArrayList<>();
-        responseList.add(response);
-        
-        /* final */
-                
-        return new ResponseEntity<>(responseList, HttpStatus.OK);
-        
+    public ResponseEntity<String> getStep() {
+        String message = "Poner la jirafa adentro";
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
 }
