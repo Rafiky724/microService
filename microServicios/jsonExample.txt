@@ -1,0 +1,11 @@
+{
+  "data": [
+    {
+      "enigma": "string",
+      "header": {
+        "id": "string",
+        "type": "string"
+      }
+    }
+  ]
+}

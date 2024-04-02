@@ -1,0 +1,8 @@
+{  
+   "basePackage":"co.com.angel.microservice.servicio_uno",
+   "configPackage":"co.com.angel.microservice.servicio_uno.config",
+   "apiPackage":"co.com.angel.microservice.servicio_uno.api",
+   "modelPackage":"co.com.angel.microservice.servicio_uno.model",
+   "groupId":"co.com.angel.service.servicio_uno",
+   "artifactId":"servicio_uno"
+}
