@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Built-By: jhona
+Build-Jdk: 17.0.10
+Implementation-Title: orquestador_maven
+Implementation-Version: 1.0.0
+Implementation-Vendor-Id: co.com.jhonan.service.orquestador_maven
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-URL: http://projects.spring.io/spring-boot/orquestador_ma
+ ven/
+Created-By: Maven Integration for Eclipse
+

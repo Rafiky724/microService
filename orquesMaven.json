@@ -1,0 +1,8 @@
+{  
+   "basePackage":"co.com.jhonan.microservice.orquestador_maven",
+   "configPackage":"co.com.jhonan.microservice.orquestador_maven.config",
+   "apiPackage":"co.com.jhonan.microservice.orquestador_maven.api",
+   "modelPackage":"co.com.jhonan.microservice.orquestador_maven.model",
+   "groupId":"co.com.jhonan.service.orquestador_maven",
+   "artifactId":"orquestador_maven"
+}
