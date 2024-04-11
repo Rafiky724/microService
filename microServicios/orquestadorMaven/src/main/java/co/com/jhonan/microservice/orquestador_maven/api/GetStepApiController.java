@@ -1,6 +1,7 @@
 package co.com.jhonan.microservice.orquestador_maven.api;
 
 import co.com.jhonan.microservice.orquestador_maven.model.JsonApiBodyRequest;
+import co.com.jhonan.microservice.orquestador_maven.model.JsonApiBodyResponseErrors;
 import co.com.jhonan.microservice.orquestador_maven.model.JsonApiBodyResponseSuccess;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiParam;
@@ -27,8 +28,10 @@ public class GetStepApiController implements GetStepApi {
     private final ObjectMapper objectMapper;
 
     private final HttpServletRequest request;
-
-    @EndpointInject(uri = "direct:get-step-one")
+    
+    private Object response;
+    
+    @EndpointInject(uri="direct:resolve-enigma")
     private FluentProducerTemplate producerTemplateResolveEnigma;
 
     @org.springframework.beans.factory.annotation.Autowired
@@ -37,29 +40,17 @@ public class GetStepApiController implements GetStepApi {
         this.request = request;
     }
 
-    public ResponseEntity<List<JsonApiBodyResponseSuccess>> getStep(@ApiParam(value = "request body get enigma step", required = true) @Valid @RequestBody JsonApiBodyRequest body) {
-        String accept = request.getHeader("Accept");
-
+ 
+    public ResponseEntity<?> getStep(@ApiParam(value="body",required=true) @Valid @RequestBody JsonApiBodyRequest body) {
         try {
-            producerTemplateResolveEnigma.request();
-            List<JsonApiBodyResponseSuccess> responseList = new ArrayList<>();
-            responseList.add(objectMapper.readValue(
-            		"{\n" +
-                            "  \"data\": [\n" +
-                            "    {\n" +
-                            "      \"enigma\": \"string\",\n" +
-                            "      \"header\": {\n" +
-                            "        \"id\": \"string\",\n" +
-                            "        \"type\": \"string\"\n" +
-                            "      }\n" +
-                            "    }\n" +
-                            "  ]\n" +
-                            "}", JsonApiBodyResponseSuccess.class));
-            return new ResponseEntity<>(responseList, HttpStatus.OK);
-
-        } catch (IOException e) {
-            log.error("Couldn't serialize response", e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        	System.out.println("Respuesta del servicio");
+            response = producerTemplateResolveEnigma.withBody(body).request();
+        	return new ResponseEntity<JsonApiBodyResponseSuccess>((JsonApiBodyResponseSuccess)response, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Couldn't serialize response for content type application/json", e);
+            return new ResponseEntity<JsonApiBodyResponseErrors>((JsonApiBodyResponseErrors)response,HttpStatus.FAILED_DEPENDENCY);
         }
     }
+
 }
+

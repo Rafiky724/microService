@@ -1,5 +1,6 @@
 package co.com.fuentes.microservice.servicio_dos.api;
 
+import co.com.fuentes.microservice.servicio_dos.model.GetEnigmaRequest;
 import co.com.fuentes.microservice.servicio_dos.model.GetEnigmaStepResponse;
 import co.com.fuentes.microservice.servicio_dos.model.JsonApiBodyRequest;
 import co.com.fuentes.microservice.servicio_dos.model.JsonApiBodyResponseErrors;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -34,14 +36,6 @@ public class GetStepApiController implements GetStepApi {
     private final ObjectMapper objectMapper;
 
     private final HttpServletRequest request;
-    
-    /* inicio */
-
-    private JsonApiBodyResponseSuccess response = new JsonApiBodyResponseSuccess();
-    private List<GetEnigmaStepResponse> enigmas = new ArrayList<>();
-    private GetEnigmaStepResponse enigma = new GetEnigmaStepResponse();
-
-    /* final */
 
     @org.springframework.beans.factory.annotation.Autowired
     public GetStepApiController(ObjectMapper objectMapper, HttpServletRequest request) {
@@ -49,22 +43,21 @@ public class GetStepApiController implements GetStepApi {
         this.request = request;
     }
 
-    public ResponseEntity<List<JsonApiBodyResponseSuccess>> getStep(@ApiParam(value = "request body get enigma step" ,required=true )  @Valid @RequestBody JsonApiBodyRequest body) {
-        String accept = request.getHeader("Accept");
+    public ResponseEntity<JsonApiBodyResponseSuccess> getStep(@ApiParam(value = "request body get enigma step" ,required=true )  @Valid @RequestBody JsonApiBodyRequest body) {
+    	List<GetEnigmaRequest> enigma = body.getData();
+        GetEnigmaStepResponse enigmaStepResponse = new GetEnigmaStepResponse();
         
-        /* inicio */
-
-        enigma.setAnswer("Poner la jirafa adentro");
-        enigmas.add(enigma);
-        response.setData(enigmas);
-
-        List<JsonApiBodyResponseSuccess> responseList = new ArrayList<>();
-        responseList.add(response);
-
-        /* final */
-
-        return new ResponseEntity<>(responseList, HttpStatus.OK);
+        enigmaStepResponse.setHeader(enigma.get(0).getHeader());
+        enigmaStepResponse.setAnswer("Step 2: Poner la jirafa adentro ");
+        
+        JsonApiBodyResponseSuccess responseBody = new JsonApiBodyResponseSuccess();
+        responseBody.addDataItem(enigmaStepResponse);
+        return new ResponseEntity<>(responseBody, HttpStatus.OK);
         
     }
 
+    @GetMapping("/messageStep")
+    public ResponseEntity<String> getPaso() {
+    	return new ResponseEntity<>("Step 2: Poner la jirafa adentro ", HttpStatus.OK);
+    }
 }

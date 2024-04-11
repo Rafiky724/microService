@@ -33,8 +33,7 @@ public class SwaggerDocumentationConfig {
                 .select()
                     .apis(RequestHandlerSelectors.basePackage("co.com.jhonan.microservice.orquestador_maven.api"))
                     .paths(PathSelectors.any())
-                    .build()
-           
+                    .build()          
                 .apiInfo(apiInfo());
     }
 
