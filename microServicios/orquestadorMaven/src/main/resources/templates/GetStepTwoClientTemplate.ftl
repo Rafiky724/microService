@@ -3,9 +3,9 @@
       {  
          "header":{  
             "id":"12345",
-            "type":"TestGiraffeRefrigerator"
-         },
-         "step":"2"
+            "type":"StepsGiraffeRefrigerator"
+         }, 
+         "step": "2"
       }
    ]
 }

@@ -1,5 +1,6 @@
 package co.com.fuentes.microservice.servicio_dos.api;
 
+import co.com.fuentes.microservice.servicio_dos.model.ErrorDetail;
 import co.com.fuentes.microservice.servicio_dos.model.GetEnigmaRequest;
 import co.com.fuentes.microservice.servicio_dos.model.GetEnigmaStepResponse;
 import co.com.fuentes.microservice.servicio_dos.model.JsonApiBodyRequest;
@@ -30,34 +31,55 @@ import java.util.Map;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-04-01T21:04:52.897-05:00[America/Bogota]")
 @Controller
 public class GetStepApiController implements GetStepApi {
-
-    private static final Logger log = LoggerFactory.getLogger(GetStepApiController.class);
-
-    private final ObjectMapper objectMapper;
-
-    private final HttpServletRequest request;
-
     @org.springframework.beans.factory.annotation.Autowired
-    public GetStepApiController(ObjectMapper objectMapper, HttpServletRequest request) {
-        this.objectMapper = objectMapper;
-        this.request = request;
+    public GetStepApiController() {
     }
 
-    public ResponseEntity<JsonApiBodyResponseSuccess> getStep(@ApiParam(value = "request body get enigma step" ,required=true )  @Valid @RequestBody JsonApiBodyRequest body) {
-    	List<GetEnigmaRequest> enigma = body.getData();
-        GetEnigmaStepResponse enigmaStepResponse = new GetEnigmaStepResponse();
+    public ResponseEntity<?> getStep(@ApiParam(value = "request body get enigma step", required = true) @Valid @RequestBody JsonApiBodyRequest body) {
+        boolean isStepTwo = (body.getData().get(0).getStep().equalsIgnoreCase("2"));
+    	
+    	if (!isStepTwo) {
+        	return new ResponseEntity<>(createResponseErrors(body), HttpStatus.BAD_REQUEST);
+        }
         
-        enigmaStepResponse.setHeader(enigma.get(0).getHeader());
-        enigmaStepResponse.setAnswer("Step 2: Poner la jirafa adentro ");
-        
-        JsonApiBodyResponseSuccess responseBody = new JsonApiBodyResponseSuccess();
-        responseBody.addDataItem(enigmaStepResponse);
-        return new ResponseEntity<>(responseBody, HttpStatus.OK);
-        
+        return new ResponseEntity<>(createResponseSuccess(body), HttpStatus.OK);
     }
+    
+    @GetMapping("/getStepTwo")
+    public ResponseEntity<String> getStepTwo() {
+    	return new ResponseEntity<>("Step 2: Poner la jirafa adentro", HttpStatus.OK);
+    }
+    
+    private List<JsonApiBodyResponseErrors> createResponseErrors(JsonApiBodyRequest body) {
+    	ErrorDetail errorDetail = new ErrorDetail();
+    	errorDetail.setCode("002");
+    	errorDetail.setDetail("Step: ".concat(body.getData().get(0).getStep()).concat(" not supported - Expected: 2"));
+    	errorDetail.setId(body.getData().get(0).getHeader().getId());
+    	errorDetail.setSource("/getStep");
+    	errorDetail.setStatus("400");
+    	errorDetail.setTitle("Step not supported");
+    	
+    	JsonApiBodyResponseErrors responseError = new JsonApiBodyResponseErrors();
+    	responseError.addErrorsItem(errorDetail);
 
-    @GetMapping("/messageStep")
-    public ResponseEntity<String> getPaso() {
-    	return new ResponseEntity<>("Step 2: Poner la jirafa adentro ", HttpStatus.OK);
+    	List<JsonApiBodyResponseErrors> responseErrorsList = new ArrayList<JsonApiBodyResponseErrors>(); 
+    	responseErrorsList.add(responseError);
+    	
+    	return responseErrorsList;
+    }
+    
+    private List<JsonApiBodyResponseSuccess> createResponseSuccess(JsonApiBodyRequest body) {
+        GetEnigmaStepResponse responseEnigma = new GetEnigmaStepResponse();    
+        responseEnigma.setHeader(body.getData().get(0).getHeader());
+        responseEnigma.setStep(body.getData().get(0).getStep());
+        responseEnigma.setStepDescription("Step 2: Poner la jirafa adentro");
+        
+        JsonApiBodyResponseSuccess responseSuccess = new JsonApiBodyResponseSuccess();
+        responseSuccess.addDataItem(responseEnigma);
+
+        List<JsonApiBodyResponseSuccess> responseSuccessList = new ArrayList<JsonApiBodyResponseSuccess>();  
+        responseSuccessList.add(responseSuccess);
+        
+        return responseSuccessList;
     }
 }

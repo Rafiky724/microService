@@ -14,26 +14,28 @@ import javax.validation.constraints.*;
  * GetEnigmaStepResponse
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-04-01T21:04:52.897-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-02-28T01:53:31.617-05:00[America/Bogota]")
 public class GetEnigmaStepResponse   {
   @JsonProperty("header")
   private Header header = null;
 
-  @JsonProperty("answer")
-  private String answer = null;
+  @JsonProperty("step")
+  private String step = null;
+  
+  @JsonProperty("stepDescription")
+  private String stepDescription = null;
 
   public GetEnigmaStepResponse header(Header header) {
     this.header = header;
     return this;
   }
 
-  /**
+/**
    * Get header
    * @return header
   **/
   @ApiModelProperty(required = true, value = "")
   @NotNull
-
   @Valid
   public Header getHeader() {
     return header;
@@ -43,53 +45,74 @@ public class GetEnigmaStepResponse   {
     this.header = header;
   }
 
-  public GetEnigmaStepResponse answer(String answer) {
-    this.answer = answer;
+  public GetEnigmaStepResponse step(String step) {
+    this.step = step;
+    return this;
+  }
+  
+  /**
+   * Get step
+   * @return step
+  **/
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
+  public String getStep() {
+	return step;
+  }
+
+  public void setStep(String step) {
+	this.step = step;
+  }
+  
+  public GetEnigmaStepResponse stepDescription(String stepDescription) {
+    this.stepDescription = stepDescription;
     return this;
   }
 
   /**
-   * Get answer
-   * @return answer
+   * Get stepDescription
+   * @return stepDescription
   **/
   @ApiModelProperty(required = true, value = "")
   @NotNull
-
-  public String getAnswer() {
-    return answer;
+  public String getStepDescription() {
+    return stepDescription;
   }
 
-  public void setAnswer(String answer) {
-    this.answer = answer;
+  public void setStepDescription(String stepDescription) {
+    this.stepDescription = stepDescription;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
+    } if (o == null || getClass() != o.getClass()) {
       return false;
     }
+    
     GetEnigmaStepResponse getEnigmaStepResponse = (GetEnigmaStepResponse) o;
+    
     return Objects.equals(this.header, getEnigmaStepResponse.header) &&
-        Objects.equals(this.answer, getEnigmaStepResponse.answer);
+		Objects.equals(this.step, getEnigmaStepResponse.step) &&
+        Objects.equals(this.stepDescription, getEnigmaStepResponse.stepDescription);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(header, answer);
+    return Objects.hash(header, step, stepDescription);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class GetEnigmaStepResponse {\n");
     
-    sb.append("    header: ").append(toIndentedString(header)).append("\n");
-    sb.append("    answer: ").append(toIndentedString(answer)).append("\n");
+    sb.append("class GetEnigmaStepResponse {\n");
+    sb.append("    header:          ").append(toIndentedString(header)).append("\n");
+    sb.append("    step:            ").append(toIndentedString(step)).append("\n");
+    sb.append("    stepDescription: ").append(toIndentedString(stepDescription)).append("\n");
     sb.append("}");
+    
     return sb.toString();
   }
 
@@ -101,6 +124,7 @@ public class GetEnigmaStepResponse   {
     if (o == null) {
       return "null";
     }
+    
     return o.toString().replace("\n", "\n    ");
   }
 }

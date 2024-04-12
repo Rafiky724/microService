@@ -26,7 +26,7 @@ public class GetStepApiControllerIntegrationTest {
     @Test
     public void getStepTest() throws Exception {
         JsonApiBodyRequest body = new JsonApiBodyRequest();
-        ResponseEntity<?> responseEntity = api.getStep(body);
+        ResponseEntity<?> responseEntity = api.getStepsPost(body);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 

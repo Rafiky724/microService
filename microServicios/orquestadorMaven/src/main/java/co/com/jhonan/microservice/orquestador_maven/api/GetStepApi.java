@@ -24,18 +24,16 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-04-08T19:32:13.664-05:00[America/Bogota]")
-@Api(value = "getStep", description = "the getStep API")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-03-12T18:23:07.512226900-05:00[America/Bogota]")
+@Api(value = "getSteps", description = "the getSteps API")
 public interface GetStepApi {
-
-    @ApiOperation(value = "Get one enigma step API", nickname = "getStep", notes = "Get one enigma step API", response = JsonApiBodyResponseSuccess.class, responseContainer = "List", tags={  })
+	@ApiOperation(value = "Get  answer enigma API", nickname = "getStepsPost", notes = "Get  answer enigma API", response = JsonApiBodyResponseSuccess.class, tags={ "resolve-enigma-api-controller", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "search results matching criteria", response = JsonApiBodyResponseSuccess.class, responseContainer = "List"),
-        @ApiResponse(code = 424, message = "bad input parameter", response = JsonApiBodyResponseErrors.class, responseContainer = "List") })
+        @ApiResponse(code = 200, message = "Inquery step success", response = JsonApiBodyResponseSuccess.class),
+        @ApiResponse(code = 424, message = "Invalid Input. please put correct request", response = JsonApiBodyResponseErrors.class) })
     @RequestMapping(value = "/getStep",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<?> getStep(@ApiParam(value = "request body get enigma step" ,required=true )  @Valid @RequestBody JsonApiBodyRequest body);
-
+    ResponseEntity<?> getStepsPost(@ApiParam(value = "body" ,required=true )  @Valid @RequestBody JsonApiBodyRequest body);
 }

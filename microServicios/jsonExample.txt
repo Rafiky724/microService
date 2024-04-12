@@ -1,11 +1,23 @@
 {
   "data": [
     {
-      "enigma": "string",
+      "enigma": "How to put a giraffe into a refrigerator?",
       "header": {
-        "id": "string",
-        "type": "string"
+        "id": "12345",
+        "type": "TestGiraffeRefrigerator"
       }
+    }
+  ]
+}
+
+{
+  "data": [
+    {
+      "header": {
+        "id": "12345",
+        "type": "ExampleType"
+      },
+      "step": "1"
     }
   ]
 }
